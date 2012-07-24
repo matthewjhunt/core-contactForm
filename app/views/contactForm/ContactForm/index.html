@@ -1,0 +1,141 @@
+#{extends 'frontend.html' /}
+#{set title: 'Contact Us' /}
+
+<div class="row">
+  <div class="span12">
+    <h1>${title}</h1>
+  </div>
+  <div class="span8">
+    #{if contact}
+      #{set status: 'failed' /}
+    #{/if}
+    #{else}
+      #{set status: 'fresh' /}
+    #{/else}
+    #{form @contactForm.ContactForm.sendMessage() , class:"form "+ status + " form-stacked",  enctype:'multipart/form-data', id: 'contact-form'}
+  
+      #{ifErrors}
+          <div class="clearfix row">
+            <div class="span6">
+              <p class="alert alert-error">
+                Please correct the errors below to send the message. <strong>Fields marked in red are required.</strong>#{if sitePhone} If you need assistance please call us at ${sitePhone}.#{/if} Thank you.
+              </p>
+            </div>
+          </div>
+      #{/ifErrors}
+      
+      #{field 'contact.name'}
+        <div class="clearfix control-group ${field.error ? 'error' : ''}" style="width: 200px; float: left; margin-right: 40px;">
+          <label for="name" class="required control-label">Your name</label>
+          <div class="input controls">
+            <input type="text" name="contact.name" id="name" value="${field?.value}">
+            <!--<span class="help-inline">#{error field.name /}</span>-->
+          </div>
+        </div>
+      #{/field}
+      
+      #{if contactShowCompanyField == "true"}
+      #{field 'contact.company'}
+        <div class="clearfix control-group ${field.error ? 'error' : ''}" style="width: 200px; float: left;">
+          <label for="company" class="required control-label">Company</label>
+          <div class="input controls">
+            <input type="text" name="contact.company" id="company" value="${field?.value}">
+            <!--<span class="help-inline">#{error field.name /}</span>-->
+          </div>
+        </div>
+      #{/field}
+      #{/if}
+  
+      #{field 'contact.email'}
+        <div class="clearfix control-group ${field.error ? 'error' : ''}" style="width: 200px; clear: left; float: left;  margin-right: 40px;">
+          <label for="email" class="required control-label">Email</label>
+          <div class="input controls">
+            <input type="email" name="contact.email" id="email" value="${field?.value}">
+            <!--<span class="help-inline">#{error field.name /}</span>-->
+          </div>
+        </div>
+      #{/field}
+      
+      #{if contactShowPhoneField == "true"}
+      #{field 'contact.phone'}
+        <div class="clearfix control-group ${field.error ? 'error' : ''}" style="width: 200px; float: left;">
+          <label for="phone" class="required control-label">Phone</label>
+          <div class="input controls">
+            <input type="tel" name="contact.phone" id="phone" value="${field?.value}">
+            <!--<span class="help-inline">#{error field.name /}</span>-->
+          </div>
+        </div>
+      #{/field}
+      #{/if}
+
+      #{field 'contact.message'}
+        <div class="clearfix control-group ${field.error ? 'error' : ''}" style="clear: left;">
+          <label for="message" class="required control-label">Message</label>
+          <div class="input controls">
+            <textarea name="contact.message" id="message" class="span6" rows="6">${field?.value}</textarea>
+            <!--<span class="help-inline"  style="display: block;">#{error field.name /}</span>-->
+          </div>
+        </div>
+      #{/field}
+      
+      #{field 'special'}
+       <div class="clearfix control-group input-special ${field.error ? 'error' : ''}" style="display: none;">
+          <label for="special">Leave this field alone</label>
+          <div class="input controls">
+            <input type="text" name="special" id="special" value="${field?.value}">
+            <!--<span class="help-inline">#{error field.name /}</span>-->
+          </div>
+        </div>
+      #{/field}
+      #{if contactShowReferralField == "true"}
+      #{field 'contact.referral'}
+        <div class="clearfix control-group ${field.error ? 'error' : ''}">
+          <label for="referral" class="control-label">#{if contactReferralLabel}${contactReferralLabel}#{/if}#{else}How did you hear about us?#{/else}</label>
+          <div class="input controls">
+            <input type="text" name="contact.referral" id="referral" value="${field?.value}" class="span6">
+            <!--<span class="help-inline">#{error field.name /}</span>-->
+          </div>
+        </div>
+      #{/field}
+      #{/if}
+      
+      #{if contactEnableCaptcha == "true"}
+      #{field 'code'}
+      <div class="clearfix control-group ${field.error ? 'error' : ''}">
+        <label for="code" class="control-label">Please type the code </label>
+        <div class="input controls">
+          <img src="@{Captcha.captcha(randomID)}" />
+          <br />
+          <input type="text" name="code" id="code" value="" />
+          <input type="hidden" name="randomID" value="${randomID}" />
+          <span class="help-inline">#{error field.name /}</span>
+        </div>
+      </div>
+      #{/field}
+      #{/if}
+      
+      <div class="form-actions">
+        <input type="submit" class="btn primary" value="Send Message">
+      </div>
+    #{/form}
+  </div>
+  <div class="span4">
+    <div class="contact-extra">
+      #{if (siteCity || siteMapLink)}
+      <h3>Location</h3>
+      <p class="contact-address">${siteAddress} ${siteSecondary}<br>
+        ${siteCity}#{if siteCity}, #{/if}${siteState} ${sitePostal}<br>
+        #{if siteMapLink}<br><a href="${siteMapLink}" target="_blank">Map</a>#{/if}
+      </p>
+      #{/if}
+      #{if sitePhone}
+      <h3>Call Us</h3>
+      <p class="contact-phone">${sitePhone}</p>
+      #{/if}
+      <h3>Connect</h3>
+      <div class="small-social clearfix">
+        #{include 'getSocial/block.html' /}
+      </div>
+    </div>
+  </div>
+</div>
