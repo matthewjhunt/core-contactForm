@@ -74,11 +74,10 @@ public class ContactForm extends Application {
       //create email and send
       SimpleEmail email = new SimpleEmail();
       try{ 
-        email.setFrom("contactform@"+Play.configuration.getProperty("site.baseURL"));
+        email.setFrom(Play.configuration.getProperty("contactForm.fromAddress"), Play.configuration.getProperty("site.name"));
         email.addReplyTo(contact.email, contact.name);
         if (Play.configuration.getProperty("site.email") != null) {
-          email.addTo(Play.configuration.getProperty("site.email"), Play.configuration.getProperty("site.name"));
-          email.addCc("divmedium@gmail.com", "Matthew Hunt");
+          email.addTo(Play.configuration.getProperty("contactForm.sendTo"), Play.configuration.getProperty("site.name"));
         } else {
           email.addTo("divmedium@gmail.com", "Matthew Hunt");
         }
