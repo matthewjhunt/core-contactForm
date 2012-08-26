@@ -24,6 +24,7 @@ public class ContactForm extends Application {
         renderArgs.put("contactShowReferralField", Play.configuration.getProperty("contactForm.showReferralField"));
         renderArgs.put("contactReferralLabel", Play.configuration.getProperty("contactForm.referralLabel"));
         renderArgs.put("contactEnableCaptcha", Play.configuration.getProperty("contactForm.enableCaptcha"));
+        renderArgs.put("siteAnalytics", Play.configuration.getProperty("site.analyticsId"));
     }
     
     public static void index() {
@@ -66,11 +67,11 @@ public class ContactForm extends Application {
       //Add user input to message
       String b = System.getProperty("line.separator");
       String message = "Name: "+contact.name+b+
-                       "Company: "+contact.company+b+
-                       "Email: " +contact.email+b+
-                       "Phone: " +contact.phone+b+
-                       "Message: " +contact.message+b+
-                       "How they heard about us: " +contact.referral+b;
+                       "\nCompany: "+contact.company+b+
+                       "\nEmail: " +contact.email+b+
+                       "\nPhone: " +contact.phone+b+
+                       "\nMessage: " +contact.message+b+
+                       "\nHow they heard about us: " +contact.referral+b;
       //create email and send
       SimpleEmail email = new SimpleEmail();
       try{ 

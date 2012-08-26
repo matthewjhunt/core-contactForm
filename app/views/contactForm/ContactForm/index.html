@@ -123,7 +123,7 @@
     <div class="contact-extra">
       #{if (siteCity || siteMapLink)}
       <h3>Location</h3>
-      <p class="contact-address">${siteAddress} ${siteSecondary}<br>
+      <p class="contact-address">#{if (siteAddress) }${siteAddress} ${siteSecondary}<br>#{/if}
         ${siteCity}#{if siteCity}, #{/if}${siteState} ${sitePostal}<br>
         #{if siteMapLink}<br><a href="${siteMapLink}" target="_blank">Map</a>#{/if}
       </p>
@@ -132,9 +132,11 @@
       <h3>Call Us</h3>
       <p class="contact-phone">${sitePhone}</p>
       #{/if}
-      <h3>Connect</h3>
-      <div class="small-social clearfix">
-        #{include 'getSocial/block.html' /}
+      <div class="contact-social-widget">
+        <h3>Connect</h3>
+        <div class="small-social clearfix">
+          #{include 'getSocial/block.html' /}
+        </div>
       </div>
     </div>
   </div>
