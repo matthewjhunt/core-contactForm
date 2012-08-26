@@ -2,15 +2,23 @@
 #{set title:messages.get('crud.list.title', type.name) /}
 
 <div id="crudList" class="${type.name}">
-
-    <h2 id="crudListTitle">Online Messages<br><span style="font-weight: normal; font-size: .6em; color: #888;">Online backups of messages submitted through contact form.</span></h2>
-    
-    <div id="crudListSearch">
-        #{crud.search /}
+  <div class="row">
+    <div class="span8">
+      <h2 id="crudListTitle">Online Messages</h2>
+      <p style="clear:left;">Online backups of messages submitted through contact form.</p>
     </div>
-    
+    <div class="span4">
+      <div id="crudListSearch">
+        #{crud.search /}
+      </div>
+    </div>
+  </div><!--.row-->
     <div id="crudListTable">
-        #{crud.table /}
+        #{crud.table fields:['name', 'email', 'phone', 'company', 'created'], sort:['created', 'name', 'email', 'phone', 'company'], class:['table']}
+          #{crud.custom 'created'}
+          ${object.created}
+          #{/crud.custom}
+        #{/crud.table}
     </div>
 
     <div id="crudListPagination">

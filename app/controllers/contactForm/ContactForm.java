@@ -75,9 +75,16 @@ public class ContactForm extends Application {
       //create email and send
       SimpleEmail email = new SimpleEmail();
       try{ 
+        
+        if (Play.configuration.getProperty("contactForm.fromAddress") != null) {
         email.setFrom(Play.configuration.getProperty("contactForm.fromAddress"), Play.configuration.getProperty("site.name"));
+        } else {
+          email.setFrom("no-reply@grizzlycms.com", "Online Contact Form");
+        }
+        
         email.addReplyTo(contact.email, contact.name);
-        if (Play.configuration.getProperty("site.email") != null) {
+        
+        if (Play.configuration.getProperty("contactForm.sendTo") != null) {
           email.addTo(Play.configuration.getProperty("contactForm.sendTo"), Play.configuration.getProperty("site.name"));
         } else {
           email.addTo("divmedium@gmail.com", "Matthew Hunt");
